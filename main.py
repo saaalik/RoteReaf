@@ -13,6 +13,7 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 import pickle
+from subprocess import *
 
 textColor = '#FEE715'
 tileColor = '#1a1a1c'
@@ -45,6 +46,7 @@ class MainWindow(QMainWindow):
         self.ui.exitButton.clicked.connect(lambda:self.myexit())
 
         self.ui._1todolistButton.clicked.connect(lambda :self.goto('todo'))
+        self.ui._2pomodoroButton.clicked.connect(lambda :self.goto('pomo'))
     
         # SHOW WINDOW
         self.show()
@@ -140,13 +142,17 @@ class MainWindow(QMainWindow):
         #else:
         #    TodoList.pop(i).frame.hide()
 
+    def pomo(self):
+        Popen('python timer.py')
 
     def goto(self,link):
         global clicked
-        if link=="todo":
-            self.todo()
-        elif link == "home":
+        if link == "home":
             self.homeWindow()
+        elif link=="todo":
+            self.todo()
+        elif link=="pomo":
+            self.pomo()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
